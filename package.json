@@ -1,0 +1,47 @@
+{
+  "name": "micro-frontend",
+  "version": "1.0.0",
+  "description": "Implementation of micro front end based on module federation",
+  "keywords": [
+    "Module Federation",
+    "Micro Frontend"
+  ],
+  "license": "MIT",
+  "author": "Wind",
+  "main": "index.js",
+  "scripts": {
+    "build": "pnpm -r --filter=!docs build",
+    "dev": "pnpm -r --filter=!docs dev",
+    "docs:build": "pnpm --filter docs build",
+    "docs:dev": "pnpm --filter docs dev",
+    "lint": "eslint . --ext js,vue --fix",
+    "lint-staged": "lint-staged",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "package.json": [
+      "sort-package-json"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.3.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.5.0",
+    "prettier": "^2.7.1",
+    "sort-package-json": "^1.24.0"
+  },
+  "packageManager": "pnpm@7.13.4",
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7.12"
+  }
+}

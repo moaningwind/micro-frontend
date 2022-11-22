@@ -1,0 +1,19 @@
+{
+  "name": "vue-micro",
+  "version": "1.0.0",
+  "description": "vue technology stack of micro application",
+  "main": "index.js",
+  "scripts": {
+    "build": "vue-cli-service build",
+    "dev": "vue-cli-service serve"
+  },
+  "dependencies": {
+    "vue": "^2.7.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.3",
+    "@vue/cli-plugin-babel": "~5.0.8",
+    "@vue/cli-service": "~5.0.8",
+    "webpack": "^5.74.0"
+  }
+}

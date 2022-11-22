@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@common/*": ["packages/vue-common/src/*"],
+      "@micro/*": ["packages/vue-micro/src/*"],
+    },
+  },
+  "exclude": ["node_modules", "dist"],
+  "vueCompilerOptions": {
+    "target": 2.7
+  }
+}

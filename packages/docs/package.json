@@ -1,0 +1,21 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "Vue technology stack common modules docs",
+  "main": "index.js",
+  "scripts": {
+    "build": "vuepress build",
+    "dev": "vuepress dev"
+  },
+  "dependencies": {
+    "core-js": "2.6.12",
+    "element-ui": "^2.15.9",
+    "vue": "^2.7.8"
+  },
+  "devDependencies": {
+    "html-entities": "^1.4.0",
+    "vuepress": "^1.9.7",
+    "vuepress-plugin-demo-container": "^0.2.0",
+    "webpack": "^4.46.0"
+  }
+}
