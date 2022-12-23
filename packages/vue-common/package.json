@@ -6,7 +6,7 @@
   "scripts": {
     "build": "vue-cli-service build",
     "dev": "vue-cli-service serve",
-    "prepare": "node scripts/overwrite"
+    "postinstall": "node ./scripts/overwrite"
   },
   "dependencies": {
     "@riophae/vue-treeselect": "^0.4.0",
