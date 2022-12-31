@@ -57,7 +57,7 @@ export const src2Test = (val) => {
 export const imgTest = (val) => {
   return imgReg.test(val)
 }
-export const xssRegTestFn = (val) => {
+export const xssTest = (val) => {
   return (
     script1Test(val) ||
     script2Test(val) ||
@@ -66,9 +66,9 @@ export const xssRegTestFn = (val) => {
     vbscriptTest(val) ||
     onloadTest(val) ||
     alertTest(val) ||
+    onErrorTest(val) ||
     src1Test(val) ||
     src2Test(val) ||
-    imgTest(val) ||
-    onErrorTest(val)
+    imgTest(val)
   )
 }

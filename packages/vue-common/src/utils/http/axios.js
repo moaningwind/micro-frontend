@@ -1,12 +1,10 @@
 import axios from 'axios'
 import Hex from './hex'
-import dayjs from 'dayjs'
 import Encrypt from './crypto'
 import SmCrypto from './smCrypto'
 import httpErrorConfig from './httpErrorConfig'
-import { xssRegTestFn } from './stopXssRegExp'
+import { xssTest } from './xss'
 import { Message, MessageBox } from 'element-ui'
-import { createSessionStorage } from '@/utils/cache'
 import { isObject, isArray, isNil, isString } from 'lodash'
 
 function isJson(val) {
@@ -18,8 +16,6 @@ function isJson(val) {
     return false
   }
 }
-
-const storage = createSessionStorage()
 
 class HttpRequest {
   constructor(options) {
@@ -60,7 +56,6 @@ class HttpRequest {
         // 加密 data
         const data = config.data
         const xssError = '您当前提交的字符可能威胁系统安全，不允许提交！'
-        const currHours = dayjs().format('YYYY-MM-DD-hh')
 
         const xssErrorTip = () => {
           MessageBox.confirm(xssError, '警告', {
@@ -71,12 +66,12 @@ class HttpRequest {
         }
 
         if (data) {
-          if (isXssTest !== false && xssRegTestFn(JSON.stringify(data))) {
+          if (isXssTest !== false && xssTest(JSON.stringify(data))) {
             xssErrorTip()
             return Promise.reject(xssError)
           }
 
-          if (isEncrypt !== false && storage.get(currHours) !== currHours) {
+          if (isEncrypt !== false) {
             this.encryptArrayOrMap(data)
             config.headers.secretKey = secretKey
           }
@@ -87,7 +82,7 @@ class HttpRequest {
         // 加密 params
         const params = config.params
         if (params) {
-          if (isXssTest !== false && xssRegTestFn(JSON.stringify(params))) {
+          if (isXssTest !== false && xssTest(JSON.stringify(params))) {
             xssErrorTip()
             return Promise.reject(xssError)
           }
@@ -109,12 +104,12 @@ class HttpRequest {
     this.axiosInstance.interceptors.response.use(
       (res) => {
         const jsonData = res.data
-        let { phxghashKey, phxgreskey } = res.headers
+        let { hashKey, reskey } = res.headers
         // 数据防篡改
-        if (phxghashKey) {
-          phxghashKey = this.encrypt.decryptRsa(phxghashKey)
+        if (hashKey) {
+          hashKey = this.encrypt.decryptRsa(hashKey)
           const resHashKey = this.SmCrypto.encryptSm3(jsonData.data.detail)
-          if (phxghashKey !== resHashKey) {
+          if (hashKey !== resHashKey) {
             Message.error(`请注意，数据被篡改！`)
             const { headers, status } = res
             return {
@@ -130,9 +125,9 @@ class HttpRequest {
         }
 
         // 公钥解密
-        if (phxgreskey) {
-          phxgreskey = this.encrypt.decryptRsa(phxgreskey)
-          const resData = this.encrypt.decryptAes(jsonData.data.detail, phxgreskey)
+        if (reskey) {
+          reskey = this.encrypt.decryptRsa(reskey)
+          const resData = this.encrypt.decryptAes(jsonData.data.detail, reskey)
           jsonData.data = isJson(resData) ? JSON.parse(resData) : resData
         }
 
@@ -190,9 +185,7 @@ class HttpRequest {
   encryptMap(dataMap) {
     for (const item in dataMap) {
       if (this.isNoArrayOrMap(dataMap[item])) {
-        if (isNil(dataMap[item])) {
-          dataMap[item] = ''
-        }
+        if (isNil(dataMap[item])) dataMap[item] = ''
         dataMap[item] = this.encryptParams(dataMap[item], this.key)
       } else {
         this.encryptArrayOrMap()
@@ -204,9 +197,7 @@ class HttpRequest {
   encryptArray(dataArray) {
     for (let i = 0; i < dataArray.length; i++) {
       if (this.isNoArrayOrMap(dataArray[i])) {
-        if (isNil(dataArray[i])) {
-          dataArray[i] = ''
-        }
+        if (isNil(dataArray[i])) dataArray[i] = ''
         dataArray[i] = this.encryptParams(dataArray[i], this.key)
       } else {
         this.encryptArrayOrMap()
@@ -218,12 +209,8 @@ class HttpRequest {
   // 加密
   encryptParams(msgString, key) {
     if (this.options.paramsWepMethod === 'Sm4') {
-      if (isNil(msgString)) {
-        msgString = ''
-      }
-      if (isString(msgString)) {
-        msgString = msgString.replace(/\n/g, ' ')
-      }
+      if (isNil(msgString)) msgString = ''
+      if (isString(msgString)) msgString = msgString.replace(/\n/g, ' ')
       return this.SmCrypto.encryptSm4(msgString, key)
     } else {
       return this.encrypt.encryptAes(msgString, key)
