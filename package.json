@@ -6,6 +6,14 @@
     "Module Federation",
     "Micro Frontend"
   ],
+  "homepage": "https://github.com/moaningwind/micro-frontend#readme",
+  "bugs": {
+    "url": "https://github.com/moaningwind/micro-frontend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moaningwind/micro-frontend.git"
+  },
   "license": "MIT",
   "author": "Wind",
   "main": "index.js",
@@ -14,30 +22,31 @@
     "dev": "pnpm -r --filter=!docs dev",
     "docs:build": "pnpm --filter docs build",
     "docs:dev": "pnpm --filter docs dev",
-    "lint": "eslint . --ext js,vue --fix",
+    "lint": "eslint . --ext js,vue",
     "lint-staged": "lint-staged",
     "prepare": "husky install"
   },
   "lint-staged": {
+    "*": [
+      "prettier --write --ignore-unknown"
+    ],
     "*.{js,vue}": [
-      "prettier --write",
       "eslint --fix"
     ],
     "package.json": [
-      "sort-package-json"
+      "pnpm dlx sort-package-json"
     ]
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.3.0",
+    "eslint-plugin-vue": "^9.8.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.5.0",
-    "prettier": "^2.7.1",
-    "sort-package-json": "^1.24.0"
+    "prettier": "^2.7.1"
   },
   "packageManager": "pnpm@7.13.4",
   "engines": {
