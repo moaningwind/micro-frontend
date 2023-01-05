@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
     "baseUrl": "./",
+    "moduleResolution": "node",
     "paths": {
       "@/*": ["src/*"],
       "@common/*": ["packages/vue-common/src/*"],
-      "@micro/*": ["packages/vue-micro/src/*"],
+      "@micro/*": ["packages/vue-micro/src/*"]
     },
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "exclude": ["node_modules", "dist"],
   "vueCompilerOptions": {
     "target": 2.7
   }
