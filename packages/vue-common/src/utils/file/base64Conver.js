@@ -8,9 +8,9 @@ export function base64ToBlob(base64Buf) {
   const bstr = window.atob(arr[1])
   let n = bstr.length
   const u8arr = new Uint8Array(n)
-  while (n--) {
+  while (n--)
     u8arr[n] = bstr.charCodeAt(n)
-  }
+
   return new Blob([u8arr], { type: mime })
 }
 
@@ -25,9 +25,9 @@ export function urlToBase64(url, mineType) {
     const img = new Image()
     img.crossOrigin = ''
     img.onload = function () {
-      if (!canvas || !ctx) {
-        return reject()
-      }
+      if (!canvas || !ctx)
+        return reject(new Error('浏览器不支持Canvas'))
+
       canvas.height = img.height
       canvas.width = img.width
       ctx.drawImage(img, 0, 0)

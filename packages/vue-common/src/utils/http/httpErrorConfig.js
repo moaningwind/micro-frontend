@@ -52,7 +52,7 @@ export default {
     },
     {
       code: 505,
-      tip: "'HTTP版本不受支持！(505)",
+      tip: '\'HTTP版本不受支持！(505)',
     },
   ],
 }

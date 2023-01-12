@@ -1,8 +1,8 @@
 /**
  * sm2加密算法公用方法
  **/
-import Hex from './hex'
 import smCrypto from 'sm-crypto'
+import Hex from './hex'
 
 class SmCryptoClass {
   constructor() {
@@ -35,10 +35,10 @@ class SmCryptoClass {
   // 生成公钥，私钥
   createKeypair() {
     return this.sm2.generateKeyPairHex()
-    /*keypair: {
+    /* keypair: {
       publicKey: '', // 公钥
       privateKey: '' // 私钥
-    },*/
+    }, */
   }
 
   // Sm2 加密

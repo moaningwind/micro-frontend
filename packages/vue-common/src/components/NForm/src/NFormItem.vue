@@ -10,11 +10,11 @@
 
   <!-- select -->
   <el-select v-else-if="formData.formType === 'select'" v-model="returnFormValue[formData.code]" class="w-full" v-bind="realFormData" v-on="listeners">
-    <el-option v-for="item in formData.data" :key="item[optionValue]" :label="item[optionLabel]" :value="item[optionValue]"></el-option>
+    <el-option v-for="item in formData.data" :key="item[optionValue]" :label="item[optionLabel]" :value="item[optionValue]" />
   </el-select>
 
   <!-- treeSelect -->
-  <treeselect
+  <Treeselect
     v-else-if="formData.formType === 'treeSelect'"
     v-model="returnFormValue[formData.code]"
     class="leading-normal py-2px"
@@ -43,7 +43,7 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import { pickBy, omitBy, startsWith } from 'lodash'
+import { omitBy, pickBy, startsWith } from 'lodash'
 
 export default {
   name: 'NFormItem',

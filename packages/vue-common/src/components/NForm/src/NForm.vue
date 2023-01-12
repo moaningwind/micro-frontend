@@ -10,7 +10,7 @@
           </template>
           <template #default>
             <slot :name="formData.code" :data="formData">
-              <n-form-item :form-value="returnFormValue" :form-data="formData"></n-form-item>
+              <NFormItem :form-value="returnFormValue" :form-data="formData" />
             </slot>
           </template>
         </el-form-item>
@@ -20,7 +20,9 @@
           <el-button type="primary" @click="submitForm">
             {{ submitText }}
           </el-button>
-          <el-button @click="resetForm">{{ resetText }}</el-button>
+          <el-button @click="resetForm">
+            {{ resetText }}
+          </el-button>
         </el-form-item>
       </el-col>
     </el-row>
@@ -28,8 +30,8 @@
 </template>
 
 <script>
-import NFormItem from './NFormItem.vue'
 import { isEmpty } from 'lodash'
+import NFormItem from './NFormItem.vue'
 
 export default {
   name: 'NForm',
@@ -69,12 +71,14 @@ export default {
       if (isEmpty(this.rules)) {
         this.$emit('submitForm', null)
         this.$emit('submit-form', null)
-      } else {
+      }
+      else {
         this.$refs.ruleForm.validate((valid, error) => {
           if (valid) {
             this.$emit('submitForm', null)
             this.$emit('submit-form', null)
-          } else {
+          }
+          else {
             this.$emit('submitForm', error)
             this.$emit('submit-form', error)
           }

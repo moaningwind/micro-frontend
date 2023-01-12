@@ -2,7 +2,7 @@ module.exports = {
   name: 'micro',
   filename: 'mf.js',
   remotes: {
-    '@common': `common@/COMMON_ASSETS/mf.js`,
+    '@common': 'common@/COMMON_ASSETS/mf.js',
   },
   exposes: {
     './App.vue': './src/App.vue',

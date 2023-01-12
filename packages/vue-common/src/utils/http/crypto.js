@@ -7,8 +7,8 @@ import JSEncrypt from 'jsencrypt' // rsa 加密
 class Encrypt {
   constructor() {
     // 公钥
-    this.pubKey =
-      'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDn1obzUZPUqUcLIkJrXdBvRT4lhEbp1toLdTwua2zH+cMZX5aAkbK7wcrf4DRDHwq4VDtoEP4afAYD+Saw7bDu3XFf5gJwguW+acSXgtsxcuIcfF7aXvnFgdDWkqnD69jHRBXfrVOyiWGIs5wDmjbZcmoh7nP0z+d8dezuRbL5kQIDAQAB'
+    this.pubKey
+      = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDn1obzUZPUqUcLIkJrXdBvRT4lhEbp1toLdTwua2zH+cMZX5aAkbK7wcrf4DRDHwq4VDtoEP4afAYD+Saw7bDu3XFf5gJwguW+acSXgtsxcuIcfF7aXvnFgdDWkqnD69jHRBXfrVOyiWGIs5wDmjbZcmoh7nP0z+d8dezuRbL5kQIDAQAB'
     // key 基础字段
     this.rootStr = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
     this.rndNum = 0

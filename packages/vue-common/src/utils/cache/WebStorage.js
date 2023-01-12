@@ -49,9 +49,8 @@ export class WebStorage {
     const { expires, timestamp } = keyInfo
 
     // 没有设置过期时间
-    if (!expires) {
+    if (!expires)
       return false
-    }
 
     return timestamp + expires * 24 * 3600 * 1000 - new Date().getTime() < 0
   }
@@ -68,17 +67,15 @@ export class WebStorage {
     const _key = this._getKey(key)
     const _data = this._getData(_key)
 
-    if (!_data) {
+    if (!_data)
       return def
-    }
 
     const isExpired = this._isExpired(_key)
     const isOnce = this._isOnce(_key)
 
     // 删除已过期或者只读取一次的_key
-    if (isExpired || isOnce) {
+    if (isExpired || isOnce)
       this._remove(_key)
-    }
 
     return isExpired ? def : _data.data
   }
@@ -100,7 +97,7 @@ export class WebStorage {
       data,
       Object.assign(options, {
         isOnce: true,
-      })
+      }),
     )
 
     this._storage.setItem(_key, _data)
@@ -114,7 +111,7 @@ export class WebStorage {
 
   each(callbackfn) {
     for (let i = this._storage.length - 1; i >= 0; i--) {
-      let _key = this._storage.key(i)
+      const _key = this._storage.key(i)
 
       // 如果以`__${this.prefixKey}_`开头 说明键值对是当前实例创建的
       if (startsWith(_key, `__${this.prefixKey}_`)) {

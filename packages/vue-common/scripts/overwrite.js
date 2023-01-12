@@ -3,6 +3,7 @@ const fs = require('fs')
 function overwriteFile(form, to) {
   const data = fs.readFileSync(form).toString()
   fs.writeFileSync(to, data)
+  // eslint-disable-next-line no-console
   console.log(`${to} file was overwritten successfully`)
 }
 

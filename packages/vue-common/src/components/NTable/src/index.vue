@@ -11,7 +11,9 @@
             自定义列
             <template #dropdown>
               <el-dropdown-menu class="custom-column-dropdown">
-                <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAll"> 全选 </el-checkbox>
+                <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAll">
+                  全选
+                </el-checkbox>
                 <el-checkbox-group v-model="checkedColumns" class="custom-column-dropdown-checkbox-group" @change="handleCheckedColumns">
                   <el-checkbox v-for="column in columns" :key="column.prop" :label="column.label">
                     {{ column.label }}
@@ -28,7 +30,9 @@
       <el-table-column v-if="showCheckbox" type="selection" width="40" />
       <el-table-column v-if="showLineNumber" type="index" align="center">
         <template #header="scope">
-          <slot name="index-header" v-bind="scope">序号</slot>
+          <slot name="index-header" v-bind="scope">
+            序号
+          </slot>
         </template>
       </el-table-column>
       <el-table-column v-for="(item, index) in reallyShowColumn" :key="index" v-bind="item">
@@ -42,8 +46,12 @@
       <el-table-column v-if="showOpnColumn" v-bind="opnColumnProps">
         <template #default="scope">
           <slot name="operation" v-bind="scope">
-            <el-button v-spring size="mini" @click="handleEdit(scope)">编辑</el-button>
-            <el-button v-spring size="mini" type="danger" @click="handleDelete(scope)"> 删除 </el-button>
+            <el-button v-spring size="mini" @click="handleEdit(scope)">
+              编辑
+            </el-button>
+            <el-button v-spring size="mini" type="danger" @click="handleDelete(scope)">
+              删除
+            </el-button>
           </slot>
         </template>
       </el-table-column>
@@ -51,7 +59,7 @@
         <slot name="append" />
       </template>
     </el-table>
-    <!-- elPagination-->
+    <!-- elPagination -->
     <el-pagination
       ref="elPagination"
       :current-page="currentPage"
@@ -148,16 +156,16 @@ export default {
   },
   computed: {
     columnsLabel() {
-      return this.columns.map((item) => item.label)
+      return this.columns.map(item => item.label)
     },
     reallyShowColumn() {
-      return this.columns.filter((item) => this.checkedColumns.includes(item.label))
+      return this.columns.filter(item => this.checkedColumns.includes(item.label))
     },
   },
   watch: {
     columns: {
       handler(newVal) {
-        this.checkedColumns = newVal.map((item) => item.label)
+        this.checkedColumns = newVal.map(item => item.label)
       },
       immediate: true,
     },

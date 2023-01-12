@@ -1,18 +1,19 @@
 import axios from 'axios'
+import { Message, MessageBox } from 'element-ui'
+import { isArray, isNil, isObject, isString } from 'lodash'
 import Hex from './hex'
 import Encrypt from './crypto'
 import SmCrypto from './smCrypto'
 import httpErrorConfig from './httpErrorConfig'
 import { xssTest } from './xss'
-import { Message, MessageBox } from 'element-ui'
-import { isObject, isArray, isNil, isString } from 'lodash'
 
 function isJson(val) {
   // Es10 catch 可以不写error
   try {
     JSON.parse(val)
     return true
-  } catch {
+  }
+  catch {
     return false
   }
 }
@@ -38,20 +39,18 @@ class HttpRequest {
       (config) => {
         const { isEncrypt, isXssTest } = config
 
-        if (this.options.paramsWepMethod === 'Sm4') {
+        if (this.options.paramsWepMethod === 'Sm4')
           this.key = this.hex.utf8StrToHex(this.SmCrypto.rndStr(16))
-        } else {
+        else
           this.key = this.SmCrypto.rndStr(16)
-        }
 
         config.headers.requestTime = this.encryptParams(new Date().getTime(), this.key)
 
         let secretKey = ''
-        if (this.options.keyWepMethod === 'Sm2') {
+        if (this.options.keyWepMethod === 'Sm2')
           secretKey = this.SmCrypto.encryptSm2(this.key)
-        } else {
+        else
           secretKey = this.encrypt.keyJsencrypt(this.key)
-        }
 
         // 加密 data
         const data = config.data
@@ -97,7 +96,7 @@ class HttpRequest {
       },
       (error) => {
         return Promise.reject(error)
-      }
+      },
     )
 
     // 响应拦截
@@ -110,7 +109,7 @@ class HttpRequest {
           hashKey = this.encrypt.decryptRsa(hashKey)
           const resHashKey = this.SmCrypto.encryptSm3(jsonData.data.detail)
           if (hashKey !== resHashKey) {
-            Message.error(`请注意，数据被篡改！`)
+            Message.error('请注意，数据被篡改！')
             const { headers, status } = res
             return {
               headers,
@@ -148,7 +147,7 @@ class HttpRequest {
           })
         }
         return Promise.reject(error)
-      }
+      },
     )
   }
 
@@ -171,11 +170,10 @@ class HttpRequest {
   }
 
   encryptArrayOrMap(data) {
-    if (isArray(data)) {
+    if (isArray(data))
       return this.encryptArray(data)
-    } else if (isObject(data)) {
+    else if (isObject(data))
       return this.encryptMap(data)
-    }
   }
 
   isNoArrayOrMap(data) {
@@ -185,9 +183,11 @@ class HttpRequest {
   encryptMap(dataMap) {
     for (const item in dataMap) {
       if (this.isNoArrayOrMap(dataMap[item])) {
-        if (isNil(dataMap[item])) dataMap[item] = ''
+        if (isNil(dataMap[item]))
+          dataMap[item] = ''
         dataMap[item] = this.encryptParams(dataMap[item], this.key)
-      } else {
+      }
+      else {
         this.encryptArrayOrMap()
       }
     }
@@ -197,9 +197,11 @@ class HttpRequest {
   encryptArray(dataArray) {
     for (let i = 0; i < dataArray.length; i++) {
       if (this.isNoArrayOrMap(dataArray[i])) {
-        if (isNil(dataArray[i])) dataArray[i] = ''
+        if (isNil(dataArray[i]))
+          dataArray[i] = ''
         dataArray[i] = this.encryptParams(dataArray[i], this.key)
-      } else {
+      }
+      else {
         this.encryptArrayOrMap()
       }
     }
@@ -209,10 +211,13 @@ class HttpRequest {
   // 加密
   encryptParams(msgString, key) {
     if (this.options.paramsWepMethod === 'Sm4') {
-      if (isNil(msgString)) msgString = ''
-      if (isString(msgString)) msgString = msgString.replace(/\n/g, ' ')
+      if (isNil(msgString))
+        msgString = ''
+      if (isString(msgString))
+        msgString = msgString.replace(/\n/g, ' ')
       return this.SmCrypto.encryptSm4(msgString, key)
-    } else {
+    }
+    else {
       return this.encrypt.encryptAes(msgString, key)
     }
   }

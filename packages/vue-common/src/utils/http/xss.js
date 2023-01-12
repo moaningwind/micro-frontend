@@ -2,27 +2,26 @@
  * 防xss攻击，特殊字符拦截正则及验证
  **/
 // script 标签
-export const script1Reg = new RegExp('<script>(.*?)</script>', 'gi')
+export const script1Reg = /<script>(.*?)<\/script>/gi
 // 单个的 </script> 标签
-export const script2Reg = new RegExp('</script>', 'gi')
+export const script2Reg = /<\/script>/gi
 // 单个的<script ...> 标签
-export const script3Reg = new RegExp('<script(.*?)>', 'gi')
+export const script3Reg = /<script(.*?)>/gi
 // javascript: 表达式
-export const javascriptReg = new RegExp('javascript:')
+export const javascriptReg = /javascript:/
 // vbscript: 表达式
-export const vbscriptReg = new RegExp('vbscript:')
+export const vbscriptReg = /vbscript:/
 // οnlοad= 表达式
-export const onloadReg = new RegExp('onload=(.*?)')
+export const onloadReg = /onload=(.*?)/
 // alert表达式
-export const alertReg = new RegExp('alert(.*?)')
+export const alertReg = /alert(.*?)/
 // onError表达式
-export const onErrorReg = new RegExp('onError=(.*?)')
+export const onErrorReg = /onError=(.*?)/
 // src形式的表达式
-export const src1Reg = new RegExp("src[\\r\\n]*=[\\r\\n]*\\\\\\'(.*?)\\\\\\'")
-// eslint-disable-next-line
-export const src2Reg = new RegExp('src[\\r\\n]*=[\\r\\n]*\\\\\\\'(.*?)\\\\\\"')
+export const src1Reg = /src[\r\n]*=[\r\n]*\\\'(.*?)\\\'/
+export const src2Reg = /src[\r\n]*=[\r\n]*\\\'(.*?)\\\"/
 // 图片表达式
-export const imgReg = new RegExp('<img(.*?)>', 'gi')
+export const imgReg = /<img(.*?)>/gi
 
 export const script1Test = (val) => {
   return script1Reg.test(val)
@@ -59,16 +58,16 @@ export const imgTest = (val) => {
 }
 export const xssTest = (val) => {
   return (
-    script1Test(val) ||
-    script2Test(val) ||
-    script3Test(val) ||
-    javascriptTest(val) ||
-    vbscriptTest(val) ||
-    onloadTest(val) ||
-    alertTest(val) ||
-    onErrorTest(val) ||
-    src1Test(val) ||
-    src2Test(val) ||
-    imgTest(val)
+    script1Test(val)
+    || script2Test(val)
+    || script3Test(val)
+    || javascriptTest(val)
+    || vbscriptTest(val)
+    || onloadTest(val)
+    || alertTest(val)
+    || onErrorTest(val)
+    || src1Test(val)
+    || src2Test(val)
+    || imgTest(val)
   )
 }

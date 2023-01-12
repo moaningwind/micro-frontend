@@ -9,9 +9,8 @@ const resize = {
     }
   },
   handleRemoveListener(el) {
-    if (el.__handleResize__) {
+    if (el.__handleResize__)
       removeResizeListener(el, el.__handleResize__)
-    }
   },
 }
 
